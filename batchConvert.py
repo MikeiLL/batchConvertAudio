@@ -3,9 +3,12 @@ import os
 import sys
 from shutil import move
 from datetime import datetime
-from hashlib import sha256
+import subprocess as sp
 
 usage = 'Usage: python batchConvert.py folder or python [-t] dupFinder.py folder1 folder2 folder3'
+
+FFMPEG_BIN = "ffmpeg" # on Linux ans Mac OS
+# FFMPEG_BIN = "ffmpeg.exe" # on Windows
 
 def find_aifs(parentFolder):
     """ 
@@ -28,11 +31,39 @@ def find_aifs(parentFolder):
  
  
 def handle_results(aifs_list, testrun=0):
-    """
-    Get the FULL list of all found aif files and make mp3 versions using ffmpeg
-    """
-    print("There are {} aif files, first of which is {}, last is {}".format(len(all_aifs), all_aifs[0] \
-    																																	, all_aifs[-1]))
+		"""
+		Get the FULL list of all found aif files and make mp3 versions using ffmpeg
+		"""
+		print("There are {} aif files, first of which is {}, last is {}".format(len(aifs_list), aifs_list[0] \
+																																			, aifs_list[-1]))
+		
+
+		for aif in aifs_list:		
+				basename = os.path.basename(aif)
+				basefilename, file_extension = os.path.splitext(basename)
+				save_to = os.path.dirname(aif) + "/" + basefilename + '.wav'
+				if not os.path.exists(save_to):
+						command_not = [ FFMPEG_BIN,
+												'-i', str(aif),
+												'-f', 'mp3',
+												'-acodec', 'libmp3lame',
+												'-ab', str(192000),
+												'-ar', str(441000), save_to
+												]
+						command = [ FFMPEG_BIN,
+											 '-i', str(aif),  
+											 save_to
+											 ]
+						another_command = [ FFMPEG_BIN,
+														'-i', str(aif),  
+														'-ac', str(1),
+														'-ab', str(64000),
+														'-ar', str(22050),
+														str(save_to)
+														]
+						print("Creating file {}".format(save_to))
+						pipe = sp.Popen(another_command, stdout = sp.PIPE, bufsize=10**8)
+
  
 def main(args): 
     """
