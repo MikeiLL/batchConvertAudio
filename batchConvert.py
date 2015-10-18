@@ -8,23 +8,22 @@ FFMPEG_BIN = "ffmpeg" # on Linux ans Mac OS
 # FFMPEG_BIN = "ffmpeg.exe" # on Windows
 
 def find_aifs(parentFolder):
-    """ 
-    Build and return an object with a key for each unique hash, and a 
-    list of all matching files as its value: {hash:[names]}
-    """
-    aifs = []
-    for dir_name, subdirs, fileList in os.walk(parentFolder):
-        #print('Scanning %s...' % dir_name)
-        for fullfilename in fileList:
-            # Get the path to the file
-            path = os.path.join(dir_name, fullfilename)
-            basefilename, file_extension = os.path.splitext(fullfilename)
-            if file_extension in ['.aif', '.aiff']:
-            	# Add the file path if not present
-							if not path in aifs:
-									aifs.append(path)
-            
-    return aifs
+		""" 
+		Build and return an object with a key for each unique hash, and a 
+		list of all matching files as its value: {hash:[names]}
+		"""
+		aifs = []
+		for dir_name, subdirs, fileList in os.walk(parentFolder):
+				print('Scanning %s...' % dir_name)
+				for fullfilename in fileList:
+						# Get the path to the file
+						path = os.path.join(dir_name, fullfilename)
+						basefilename, file_extension = os.path.splitext(fullfilename)
+						if file_extension in ['.aif', '.aiff']:
+								# Add the file path if not present
+								if not path in aifs:
+										aifs.append(path)
+		return aifs
  
  
 def handle_results(aifs_list, options):
@@ -89,11 +88,16 @@ def main(args):
 		print(args)
 		for dir in args:
 				# Iterate the folders given
+				print(dir)
 				if os.path.exists(dir):
 						# strip trailing slash if exists
 						dir = dir.rstrip('/')
 						# Find the aif files and extend aifs list
-						aifs.extend(find_aifs(dir))
+						some_aifs = find_aifs(dir)
+						print("1. {}".format(some_aifs))
+						print("2. {}".format(aifs))
+						aifs.extend(some_aifs)
+						print("3. {}".format(aifs))
 				else:
 						print('\'%s\' is not a valid path, please verify' % dir)
 						sys.exit()
