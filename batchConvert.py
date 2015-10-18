@@ -14,7 +14,7 @@ def find_aifs(parentFolder):
 		"""
 		aifs = []
 		for dir_name, subdirs, fileList in os.walk(parentFolder):
-				print('Scanning %s...' % dir_name)
+				print('Scanning {}...'.format(dir_name))
 				for fullfilename in fileList:
 						# Get the path to the file
 						path = os.path.join(dir_name, fullfilename)
@@ -88,16 +88,12 @@ def main(args):
 		print(args)
 		for dir in args:
 				# Iterate the folders given
-				print(dir)
 				if os.path.exists(dir):
 						# strip trailing slash if exists
 						dir = dir.rstrip('/')
 						# Find the aif files and extend aifs list
 						some_aifs = find_aifs(dir)
-						print("1. {}".format(some_aifs))
-						print("2. {}".format(aifs))
 						aifs.extend(some_aifs)
-						print("3. {}".format(aifs))
 				else:
 						print('\'%s\' is not a valid path, please verify' % dir)
 						sys.exit()
