@@ -58,8 +58,10 @@ def handle_results(aifs_list, options):
 						if not options.testing == True:
 								if options.format == 'wav':
 										pipe = sp.Popen(command_wav, stdout = sp.PIPE, bufsize=10**8)
+										pipe.wait()
 								else:
 										pipe = sp.Popen(command_mp3, stdout = sp.PIPE, bufsize=10**8)
+										pipe.wait()
 						else:
 								if options.format == 'wav':
 										print("Testing: {}".format(command_wav))
