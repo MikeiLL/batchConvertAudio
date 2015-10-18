@@ -57,11 +57,11 @@ def handle_results(aifs_list, options):
 						print("Creating file {}".format(save_to))
 						if not options.testing == True:
 								if options.format == 'wav':
-										pipe = sp.Popen(command_wav, stdout = sp.PIPE, bufsize=10**8)
-										pipe.wait()
+										p = sp.Popen(command_wav, stdout = sp.PIPE, bufsize=10**8)
+										p.wait()
 								else:
-										pipe = sp.Popen(command_mp3, stdout = sp.PIPE, bufsize=10**8)
-										pipe.wait()
+										p = sp.Popen(command_mp3, stdout = sp.PIPE, bufsize=10**8)
+										p.wait()
 						else:
 								if options.format == 'wav':
 										print("Testing: {}".format(command_wav))
