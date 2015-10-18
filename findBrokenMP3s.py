@@ -45,12 +45,12 @@ def delete_bad_files(broken, testrun=1):
 		if not testrun:
 				print("Delete all suspect files? y/N")
 				confirm = raw_input()
-				if not confirm.lower == 'y':
-						print("Exiting.")
+				if not confirm.lower() == 'y':
+						print("Exiting as per {}".format(confirm.lower()))
 						sys.exit()
 				for file in broken:
-						print("Bad file {} exists: {}.".format(file, os.path.exists(file)))
-						os.remove(the_mp3)
+						print("Bad file {} exists: {}. Removing.".format(file, os.path.exists(file)))
+						os.remove(file)
 						count += 1
 				print("Deleted {} files, this programmed evaluated as broken mp3 encodings".format(count))
 		else:
